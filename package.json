@@ -1,0 +1,15 @@
+{
+	"name": "com.ks.googleanalytics",
+	"version": "1.0.0",
+	"displayName": "KS Google Analytics",
+	"description": "https://github.com/kamyker/google-analytics-unity-windows",
+	"unity": "2019.1",
+	"keywords": [
+		"analytics"
+	],
+	"author": {
+		"name": "Kamil Szurant",
+		"email": "kamil.szurant@gmail.com",
+		"url": "https://twitter.com/kamyker"
+	}
+}
