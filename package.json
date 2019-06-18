@@ -1,6 +1,6 @@
 {
 	"name": "com.ks.googleanalytics",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"displayName": "KS Google Analytics",
 	"description": "https://github.com/kamyker/google-analytics-unity-windows",
 	"unity": "2019.1",
