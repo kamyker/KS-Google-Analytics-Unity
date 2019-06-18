@@ -4,7 +4,7 @@
 1. Open "unity_project_name/Packages/manifest.json"
 2. Under "dependencies" add:
   ```  
-  "com.ks.googleanalytics": "https://github.com/kamyker/google-analytics.git", 
+  "com.ks.googleanalytics": "https://github.com/kamyker/KS-Google-Analytics-Unity.git", 
   ```
 3. Drop GA prefab to your starting scene.
 4. Set tracking id in prefab Google Analytics component
@@ -23,7 +23,7 @@
   
 ## Differences to official GA Plugin:
  - Probably works only in standalone builds (tested in Windows)
- - **Possibilty to batch events**, for ex. if u want to send 5 hits together run `StartBatchingInsteadOfSendingHits()`, log you events as usual and run `StopBatchingAndSendHits()`
+ - **Possibilty to batch events**, for ex. to send 5 hits together run `StartBatchingInsteadOfSendingHits()`, log events as usual and run `StopBatchingAndSendHits()`
  - **Possibilty to send events in OnApplicationQuit()**, simply set `GoogleAnalytics.Instance.RunSynchronously = true;` before sending hits, it will prevent application from quiting
  - **Added LogPageView(string location, (optional)string title)**, use it instead of LogScreen as it is much better integrated in GA, works in realtime and in user explorer. 
  
