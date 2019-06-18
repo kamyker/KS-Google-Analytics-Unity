@@ -4,7 +4,7 @@
 1. Open "unity_project_name/Packages/manifest.json"
 2. Under "dependencies" add:
   ```  
-  "com.ks.googleanalytics": "https://github.com/kamyker/google-analytics.git", 
+  "com.ks.googleanalytics": "https://github.com/kamyker/KS-Google-Analytics-Unity.git", 
   ```
 3. Drop GA prefab to your starting scene.
 4. Set tracking id in prefab Google Analytics component
