@@ -9,6 +9,16 @@
 3. Drop GA prefab to your starting scene.
 4. Set tracking id in prefab Google Analytics component
 
+## Updating:
+In 2019.1 package manager locks git plugin to the last version pulled. To update to the newest version simply remove lock from Packages/manifest.json:
+```
+"lock": {
+  "com.ks.googleanalytics": {
+    "hash": "c3254128d9f002efa239afef42c9bedb431f6b68",
+    "revision": "HEAD"
+  }
+}
+```
 ## How to use
   - Add `using KS.GoogleAnalytics`to your script
   - [API Reference](https://developers.google.com/analytics/devguides/collection/unity/reference) - All basic methods are the same
