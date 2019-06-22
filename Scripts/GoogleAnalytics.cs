@@ -184,7 +184,9 @@ namespace KS.GoogleAnalytics
 		{
 			batchingMode = false;
 			var urlAndBody = ParametersManager.GetUrlAndBatchedBodyAndClear();
-			Send(urlAndBody.url, urlAndBody.body);
+
+			if (urlAndBody.body.Count > 0)
+				Send(urlAndBody.url, urlAndBody.body);
 		}
 
 		private void SendOrBatchHit()
