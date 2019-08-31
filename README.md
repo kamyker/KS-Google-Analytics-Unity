@@ -39,7 +39,7 @@ In 2019.1 package manager locks git plugin to the last version pulled. To update
  
 Ex: `GoogleAnalyticsV4.instance.LogPageView("MainMenu/Settings")`
 ![GitHub Logo](/imgs~/pageview_example.png)
- - Simpler GA prefab settings (rest ino pulled from player settings)
+ - Simpler GA prefab settings (rest is pulled from player settings)
  - Added EndSession event when GA prefab is Destoyed (player quited game)
  - Added StartSession event when GA prefab is Awaken
  - Updated WWW to UnityWebRequest
