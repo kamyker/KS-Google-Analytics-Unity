@@ -30,18 +30,16 @@ namespace KS.GoogleAnalytics
         void Awake()
         {
             Init();
-
-            if (sendStartSessionEvent)
-                StartSession();
         }
 
         private void OnDestroy()
         {
-            if (sendEndSessionEvent)
-            {
-                RunSynchronously = true;
-                StopSession();
-            }
+            if (Instance == this)
+                if (sendEndSessionEvent)
+                {
+                    RunSynchronously = true;
+                    StopSession();
+                }
         }
 
         private void Init()
@@ -64,6 +62,9 @@ namespace KS.GoogleAnalytics
 
                 if (anonymizeIP)
                     ParametersManager.SetPernamentParameters((Parameters.General.ANONYMIZE_IP, "1"));
+
+                if (sendStartSessionEvent)
+                    StartSession();
             }
         }
 
