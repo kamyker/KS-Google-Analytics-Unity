@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -21,12 +22,13 @@ namespace KS.GoogleAnalytics
         public static GoogleAnalytics Instance = null;
 
         [NonSerialized]
-        public bool RunSynchronously = false;
+        // public bool RunSynchronously = false;
 
         private bool batchingMode = false;
 
         public ParametersManager ParametersManager = new ParametersManager();
-
+        List<UnityWebRequest> requests = new List<UnityWebRequest>();
+        public bool IsSendingRequests => requests.Count > 0;
         void Awake()
         {
             Init();
@@ -34,12 +36,8 @@ namespace KS.GoogleAnalytics
 
         private void OnDestroy()
         {
-            if (Instance == this)
-                if (sendEndSessionEvent)
-                {
-                    RunSynchronously = true;
-                    StopSession();
-                }
+            if(Instance == this)
+                AbortAllRequests();
         }
 
         private void Init()
@@ -66,6 +64,8 @@ namespace KS.GoogleAnalytics
                 if (sendStartSessionEvent)
                     StartSession();
             }
+            else
+                Destroy(gameObject);
         }
 
         public void StartSession()
@@ -208,24 +208,36 @@ namespace KS.GoogleAnalytics
                 return;
             }
 
-            if (RunSynchronously)
-                HandleWWWSynchronously(UnityWebRequest.Post(url, body));
-            else
+            // if (RunSynchronously)
+            //     HandleWWWSynchronously(UnityWebRequest.Post(url, body), 3);
+            // else
                 StartCoroutine(HandleWWW(UnityWebRequest.Post(url, body)));
         }
 
-        private void HandleWWWSynchronously(UnityWebRequest request)
-        {
-            var operation = request.SendWebRequest();
-            while (!operation.isDone)
-            { }
-            LogHandleWWWResult(request);
-        }
+        // private void HandleWWWSynchronously(UnityWebRequest request, float secTimeout)
+        // {
+        //     var operation = request.SendWebRequest();
+        //     using var timeout = new CancellationTokenSource((int)(1000 * secTimeout));
+        //     while(!operation.isDone)
+        //     {
+        //         if(timeout.IsCancellationRequested)
+        //             return;
+        //     }
+        //     LogHandleWWWResult(request);
+        // }
 
         private IEnumerator HandleWWW(UnityWebRequest request)
         {
-            yield return request.SendWebRequest();
-            LogHandleWWWResult(request);
+            requests.Add(request);
+            try
+            {
+                yield return request.SendWebRequest();
+                LogHandleWWWResult(request);
+            }
+            finally
+            {
+                requests.Remove(request);
+            }
         }
 
         private void LogHandleWWWResult(UnityWebRequest request)
@@ -244,6 +256,15 @@ namespace KS.GoogleAnalytics
                 else if (enableErrorLogs)
                     Debug.LogWarning("Google Analytics hit request rejected with " +
                          "status code " + request.responseCode);
+            }
+        }
+
+        public void AbortAllRequests()
+        {
+            foreach(var r in requests)
+            {
+                r.Abort();
+                r.Dispose();
             }
         }
     }
